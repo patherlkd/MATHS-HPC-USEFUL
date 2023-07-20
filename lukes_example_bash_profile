@@ -1,0 +1,73 @@
+# .bash_profile                                                                                                                                                                             
+                                                                                                                                                                                            
+NODENAME=$(hostname)                                                                                                                                                                        
+                                                                                                                                                                                            
+# Get the aliases and functions                                                                                                                                                             
+if [ -f ~/.bashrc ]; then                                                                                                                                                                   
+        . ~/.bashrc                                                                                                                                                                         
+fi                                                                                                                                                                                          
+                                                                                                                                                                                            
+# User specific environment and startup programs                                                                                                                                            
+                                                                                                                                                                                            
+PATH=$PATH:$HOME/bin                                                                                                                                                                        
+PATH=$PATH:$HOME/.local/bin                                                                                                                                                                 
+PATH=$PATH:$HOME/.localpython/bin                                                                                                                                                           
+PATH=$PATH:$HOME/anaconda3/bin                                                                                                                                                              
+export PATH                                                                                                                                                                                 
+                                                                                                                                                                                            
+                                                                                                                                                                                            
+                                                                                                                                                                                            
+                                                                                                                                                                                            
+if [[ "$NODENAME" == *"hpc6"* ]]; then                                                                                                                                                      
+                                                                                                                                                                                            
+                                                                                                                                                                                            
+module load gcc/gcc11                                                                                                                                                                       
+module list                                                                                                                                                                                 
+                                                                                                                                                                                            
+LD_LIBRARY_PATH=/clusternfs/ldavis/ovito-basic-3.7.4-x86_64/lib/ovito:$LD_LIBRARY_PATH                                                                                                      
+LD_LIBRARY_PATH=/clusternfs/ldavis/ovito-basic-3.7.4-x86_64/lib/ovito/lib:$LD_LIBRARY_PATH                                                                                                  
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/lib64                                                                                                                                                     
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/anaconda3/lib                                                                                                                                        
+                                                                                                                                                                                            
+name=$(whoami)                                                                                                                                                                              
+echo " == Welcome to the maths HPC $name =="                                                                                                                                                
+echo " . "                                                                                                                                                                                  
+echo " . "                                                                                                                                                                                  
+perl /clusternfs/$name/warn_user_about_nfs_consumption.pl                                                                                                                                   
+echo " . "                                                                                                                                                                                  
+echo " . "                                                                                                                                                                                  
+cd /clusternfs/$name/                                                                                                                                                                       
+echo " == Your programs running == "                                                                                                                                                        
+squeue | grep $name                                                                                                                                                                         
+echo " == Partition information == "                                                                                                                                                        
+sinfo --long --Node                                                                                                                                                                         
+#echo " == Sizes of your folders and files in /clusternfs/$name == "                                                                                                                        
+#du -hs * | sort -hr                                                                                                                                                                        
+#echo " =========================== "                                                                                                                                                       
+export LD_LIBRARY_PATH                                                                                                                                                                      
+echo $LD_LIBRARY_PATH                                                                                                                                                                       
+fi                                                                                                                                                                                          
+                                                                                                                                                                                            
+if [[ "$NODENAME" == *"dps"* ]]; then                                                                                                                                                       
+                                                                                                                                                                                            
+name=$(whoami)                                                                                                                                                                              
+echo " == Welcome to the maths DPS (machine $NODENAME) $name =="                                                                                                                            
+echo " . "                                                                                                                                                                                  
+echo " . "                                                                                                                                                                                  
+#perl /clusternfs/$name/warn_user_about_nfs_consumption.pl                                                                                                                                  
+echo " . "                                                                                                                                                                                  
+echo " . "                                                                                                                                                                                  
+cd /local/${name}                                                                                                                                                                           
+#echo " == Your programs running == "                                                                                                                                                       
+#squeue | grep $name                                                                                                                                                                        
+#echo " == Partition information == "                                                                                                                                                       
+#sinfo --long --Node                                                                                                                                                                        
+#echo " == Sizes of your folders and files in /local/$name == "                                                                                                                             
+#du -hs */ | sort -hr                                                                                                                                                                       
+                                                                                                                                                                                            
+module load gcc/gcc11                                                                                                                                                                       
+module load nvidia/cuda-11.8                                                                                                                                                                
+module list                                                                                                                                                                                 
+echo " =========================== "                                                                                                                                                        
+export LD_LIBRARY_PATH                                                                                                                                                                      
+fi  
