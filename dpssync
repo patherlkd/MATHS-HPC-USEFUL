@@ -1,0 +1,9 @@
+#!/bin/bash                                                                                                                           
+                                                                                                                                      
+BEG=$1                                                                                                                                
+END=$2                                                                                                                                
+send=$3                                                                                                                               
+recv=$4                                                                                                                               
+rsyncargs=$5                                                                                                                          
+                                                                                                                                      
+for ((i=BEG;i<=END;i++)); do rsync --mkpath ${rsyncargs} ${send} dps${i}:${recv}; done  
