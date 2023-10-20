@@ -1,0 +1,75 @@
+File Edit Options Buffers Tools Sh-Script Help                                                                                                                                               
+#module load gcc/gcc11                                                                                                                                                                       
+
+vers=develop
+#vers=develop-shared                                                                                                                                                                         
+#vers=develop-fluidmembrane                                                                                                                                                                  
+
+#vers=29Sep2021                                                                                                                                                                              
+
+
+
+mkdir -p /home/ucahlda/lammps-python
+cd /home/ucahlda/lammps-python
+wget https://github.com/lammps/lammps/archive/refs/heads/${vers}.zip
+unzip develop.zip
+cd /home/ucahlda/lammps-python/lammps-${vers}/src
+
+echo "Now in: "
+
+pwd
+
+machine="serial"
+echo " == Making LAMMPS-$machine for $nodename == "
+echo "Machine filename: $machine"
+make clean-${machine}
+make mode=shared ${machine}
+make no-all
+make yes-EXTRA-FIX
+make yes-EXTRA-PAIR
+make yes-MANIFOLD
+make yes-MOLECULE
+make yes-RIGID
+make yes-MANYBODY
+make yes-BROWNIAN
+make yes-PYTHON
+
+make install-python
+#make -j 4 $machine                                                                                                                                                                          
+
+#make yes-GPU                                                                                                                                                                                
+
+#cd /home/ucahlda/lammps/lammps-29Sep2021/lib/gpu                                                                                                                                            
+#pwd                                                                                                                                                                                         
+#python3.9 Install.py -m cuda -p mixed -b                                                                                                                                                    
+#./nvc_get_devices                                                                                                                                                                           
+#cd /home/ucahlda/lammps/lammps-29Sep2021/src                                                                                                                                                
+#make -j $nprocs mode=shared ${machine}                                                                                                                                                      
+
+echo " == Done. == "
+
+#sleep 2s                                                                                                                                                                                    
+
+#machine="mpi"                                                                                                                                                                               
+#echo " == Making LAMMPS-$machine for $nodename == "                                                                                                                                         
+#echo "Machine filename: $machine"                                                                                                                                                           
+#make clean-${machine}                                                                                                                                                                       
+#make no-all                                                                                                                                                                                 
+#make yes-EXTRA-FIX                                                                                                                                                                          
+#make yes-EXTRA-PAIR                                                                                                                                                                         
+#make yes-MANIFOLD                                                                                                                                                                           
+#make yes-MOLECULE                                                                                                                                                                           
+#make yes-RIGID                                                                                                                                                                              
+#make yes-MANYBODY                                                                                                                                                                           
+#make yes-BROWNIAN                                                                                                                                                                           
+#make yes-GPU                                                                                                                                                                                
+#make yes-PYTHON                                                                                                                                                                             
+
+#cd /home/ucahlda/lammps/lammps-${vers}/lib/gpu                                                                                                                                              
+#pwd                                                                                                                                                                                         
+#python3.9 Install.py -m cuda -p double -b                                                                                                                                                   
+#./nvc_get_devices                                                                                                                                                                           
+#cd /home/ucahlda/lammps/lammps-${vers}/src                                                                                                                                                  
+#make -j $nprocs mode=shared ${machine}                                                                                                                                                      
+#make -j $nprocs $machine                                                                                                                                                                    
+echo " == Done. == "
